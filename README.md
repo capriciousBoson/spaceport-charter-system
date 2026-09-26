@@ -53,15 +53,24 @@ venv\Scripts\activate          # macOS/Linux: source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Create `backend/.env` with your database details:
+Create `backend/.env` with a Django secret key and your database details:
 
 ```
+DJANGO_SECRET_KEY=your-secret-key
 DATABASE_NAME=spaceport
 DATABASE_ADMIN=spaceportadmin
 DATABASE_ADMIN_PASSWORD=your-password
 DATABASE_HOST=localhost
 DATABASE_PORT=5432
 ```
+
+To generate a secret key (with the venv activated):
+
+```bash
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+
+If `DJANGO_SECRET_KEY` is missing, the app falls back to an insecure development key. That's fine for running locally, but never use it in production.
 
 Create the tables, load the seed data and start the server:
 
